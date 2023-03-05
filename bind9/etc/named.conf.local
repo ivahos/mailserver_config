@@ -1,0 +1,22 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+zone "supermail.au" {
+        type master;
+        file "/var/named/master/supermail.au.DB";
+        allow-query { any; };
+        allow-transfer { mysecondaries; };
+        allow-update { key updates; };
+        # look for dnssec keys here:
+        key-directory "/var/named/keys/supermail.au";
+        # publish and activate dnssec keys:
+        dnssec-policy mypolicy;
+        # use inline signing:
+        inline-signing yes;
+};
+

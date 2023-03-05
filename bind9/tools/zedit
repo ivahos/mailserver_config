@@ -1,0 +1,5 @@
+#!/bin/sh
+rndc freeze $1
+rndc sync -clean
+vi /var/named/master/${1}.DB
+rndc thaw $1

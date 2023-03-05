@@ -1,0 +1,31 @@
+$ORIGIN .
+$TTL 300	; 2 minutes
+supermail.au		IN SOA	moss.ih36.net. bob.supermail.au. (
+				2023030416 ; serial
+				14400      ; refresh (30 minutes)
+				7200       ; retry (2 hours)
+				604800     ; expire (4 days)
+				300        ; minimum (2 minutes)
+				)
+			NS	moss.ih36.net.
+			NS	hamar.ih36.net.
+			NS	brizzy.ih36.net.
+			NS	ns2.afraid.org.
+			MX	10 mail.supermail.au.
+			TXT	"v=spf1 +mx -all"
+			CAA	128 issue "letsencrypt.org"
+$ORIGIN supermail.au.
+_dmarc			TXT	"v=DMARC1; p=reject; sp=reject; pct=100; aspf=r; fo=1:d:s; ruf=mailto:bob@supermail.au; rua=mailto:bob@supermail.au"
+mail._domainkey		TXT	( "v=DKIM1; h=sha256; k=rsa; "
+	  "p=MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAxKLWQ6JJH54AbY3xJR2B3Nm253qQcg8AgFBkKGUK2ZCWC9ztZBeDktnMst0IRBMeZJz/yP1RYVoqjHPtmNx1AXv1QYw59o3clVuniwozEBv5shkGqHpWcQKGO1vauLHEJIdYEU6hXyp5b24L49k2ajzpeq5vC4lAUf3Usnd9X7xwKRlwHn2VOsvYNDetpsKqDbgF+RIg9fGSMq"
+	  "2u3VGwpR7sHRfAmORtBUPNY1Y0RgfOMtV042uKckEbbJH6zlVtCwCnOSlFJgmQkFIJ68p4m1fXxmUEvLmZ3tChMKj8JjOitnv4RJgqMcvw5KJEP6c6s0O4LEIcttE2qCzud0sg2zj4bO5izTejEUTLj8VOvurtNcfrjHF2NZ1esV7Dksk1Hz8PwTzlcMg08Xhnu9i8Eyo4Je+zpNEpX3n94Vck24KGow1I5oibXqL+DRgBPSjm74g2FsXb"
+	  "jisSFuRk8QMksuO33bhthLIo3/h6x2NkN/qe8ZCz8Nj/qavmcSJQ4/hDnqFkhtMKF26fnbD0gBmN24FC4gSIvbg7jgLlxasY6sKsLp3c0uIIYKLDcJHs4KIVwmF8Y30i9zwTinVp/C3OL6Pw9vso5angj7OHqWKY22DBsf67MvhvrKXVKX1qL+O4uhOXzrMR2wpOvpf154v8k2Z70llDKJO8G+XRBN0a9v8CAwEAAQ==" )  ; ----- DKIM key mail for supermail.au
+mail			A	175.45.180.15
+			AAAA	2404:9400:2:0:216:3eff:fee3:5aa0
+mta-sts			CNAME	mail.supermail.au.
+_mta-sts		TXT	"v=STSv1; id=2023030401Z"
+_smtp._tls		TXT	"v=TLSRPTv1; rua=mailto:bob@supermail.au"
+_25._tcp.mail.supermail.au. IN TLSA 3 1 1 f943ecfe1a2efad614494013bd21294587f0626393cd8833e6fede3438df067f
+_465._tcp.mail.supermail.au. IN TLSA 3 1 1 f943ecfe1a2efad614494013bd21294587f0626393cd8833e6fede3438df067f
+_587._tcp.mail.supermail.au. IN TLSA 3 1 1 f943ecfe1a2efad614494013bd21294587f0626393cd8833e6fede3438df067f
+_993._tcp.mail.supermail.au. IN TLSA 3 1 1 f943ecfe1a2efad614494013bd21294587f0626393cd8833e6fede3438df067f

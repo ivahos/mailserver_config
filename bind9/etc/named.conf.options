@@ -1,0 +1,67 @@
+options {
+	directory "/var/cache/bind";
+
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you may need to fix the firewall to allow multiple
+	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+	// If your ISP provided one or more IP addresses for stable 
+	// nameservers, you probably want to use them as forwarders.  
+	// Uncomment the following block, and insert the addresses replacing 
+	// the all-0's placeholder.
+
+	// forwarders {
+	// 	0.0.0.0;
+	// };
+
+	//========================================================================
+	// If BIND logs error messages about the root key being expired,
+	// you will need to update your keys.  See https://www.isc.org/bind-keys
+	//========================================================================
+	dnssec-validation auto;
+	also-notify { 119.42.54.238; };
+
+	listen-on-v6 { any; };
+};
+key "rndc-key" {
+      algorithm hmac-sha256;
+      secret "oc7zEP7e28DTm2PFxO0E5SjEbn2+I8CV7nY2MlJ29KFgcaOIR5aMgqUkKKu19/0LLvEMEx7VXUgo5qGkXwz90Q==";
+};
+
+key "updates" {
+      algorithm hmac-sha256;
+      secret "OiF7mjPA967tX87iovZ/rVM6YJTj/NWwHZj6sIacp3wnAS8/lY0Sy62j1OUEcLcr9noauE8C8/Weh2t3Xj1eFQ==";
+};
+
+
+controls {
+      inet 127.0.0.1 port 953
+              allow { 127.0.0.1; } keys { "rndc-key"; };
+};
+
+acl "mysecondaries" {
+        119.42.54.238;                                          //moss ipv4
+        203.18.30.126;                                          //brizzy ipv4
+        203.57.115.192;                                         //hamar ipv4
+	69.65.50.192;						// freedns
+	2001:1850:1:5:800::6b;					// freedns
+};
+
+dnssec-policy mypolicy {
+        dnskey-ttl 600;
+        keys {
+                ksk lifetime unlimited algorithm ecdsap256sha256;
+                zsk lifetime 30d algorithm ecdsap256sha256;
+        };
+        max-zone-ttl 600;
+        parent-ds-ttl 900;
+        parent-propagation-delay 2h;
+        publish-safety 2h;
+        retire-safety 2h;
+        purge-keys 1d;
+        signatures-refresh 5d;
+        signatures-validity 15d;
+        signatures-validity-dnskey 15d;
+        zone-propagation-delay 2h;
+};
+
